@@ -103,3 +103,13 @@ spec:
             name: adjust-ruby-app
             port:
               number: 80
+---
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  name: adjust-ruby-app
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: adjust-ruby-app
