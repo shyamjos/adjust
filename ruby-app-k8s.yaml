@@ -41,8 +41,8 @@ spec:
     spec:
       containers:
       - name: adjust-ruby-app
-        image: adjust-ruby-app:latest     
-        imagePullPolicy: Always
+        image: adjust-ruby-app:v1     
+        imagePullPolicy: IfNotPresent
         resources:
           requests:
             cpu: 50m
