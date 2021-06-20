@@ -39,6 +39,18 @@ spec:
         tier: web
         environment: production
     spec:
+      affinity:
+        podAntiAffinity:
+         preferredDuringSchedulingIgnoredDuringExecution:
+         - weight: 100
+           podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values: 
+                  - adjust-ruby-app
+              topologyKey: topology.kubernetes.io/zone
       containers:
       - name: adjust-ruby-app
         image: adjust-ruby-app:v1     
