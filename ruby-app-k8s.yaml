@@ -61,3 +61,39 @@ spec:
          successThreshold: 1
          failureThreshold: 2
          timeoutSeconds: 2     
+---
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: adjust-ruby-app
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: adjust-ruby-app
+  minReplicas: 2
+  maxReplicas: 5
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 60
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: adjust-ruby-app
+spec:
+  rules:
+  - host: ruby-app.adjust.local
+    http:
+      paths:
+      - pathType: Prefix
+        path: /
+        backend:
+          service:
+            name: adjust-ruby-app
+            port:
+              number: 80
