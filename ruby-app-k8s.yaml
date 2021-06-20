@@ -80,6 +80,12 @@ spec:
       target:
         type: Utilization
         averageUtilization: 60
+  - type: Resource
+    resource:
+      name: memory 
+      target:
+        type: Utilization 
+        averageUtilization: 60 
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
