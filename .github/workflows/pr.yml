@@ -16,8 +16,6 @@ jobs:
         minikube config set kubernetes-version v1.20.7
         minikube start
         minikube update-context
-        minikube addons enable ingress
-        minikube addons enable metrics-server
         kubectl cluster-info
         kubectl get pods -A
     - name: Build image 
@@ -33,6 +31,8 @@ jobs:
     - name: Test service URLs
       run: | 
         echo -n "Testing Endpoint..."
-        kubectl	get svc	adjust-ruby-app
-        minikube ip
-        curl -H "Host: ruby-app.adjust.local" http://$(minikube ip)
+        kubectl expose deployment adjust-ruby-app --type=NodePort --name=adjust-ruby-app-test
+        PORT=$(kubectl get svc adjust-ruby-app-test -o=jsonpath='{.spec.ports[?(@.port==80)].nodePort}')
+        IP=$(minikube ip)
+        curl --fail http://$IP:$PORT/healthcheck        
+        curl --fail http://$IP:$PORT
