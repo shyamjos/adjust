@@ -53,7 +53,7 @@ spec:
               topologyKey: topology.kubernetes.io/zone
       containers:
       - name: adjust-ruby-app
-        image: adjust-ruby-app:v1     
+        image: adjust-ruby-app:latest     
         imagePullPolicy: IfNotPresent
         resources:
           requests:
