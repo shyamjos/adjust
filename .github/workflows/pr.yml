@@ -27,7 +27,8 @@ jobs:
         docker images
     - name: Deploy to minikube
       run: 
-        kubectl apply -f deploy/deploy-minikube.yaml
+        kubectl apply -f ruby-app-k8s.yaml
+        kubectl rollout status deployment/adjust-ruby-app || echo "Deployment failed!" && exit 1
     - name: Test service URLs
       run: | 
         minikube service list
