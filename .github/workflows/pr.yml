@@ -1,4 +1,4 @@
-name: "Create cluster using Minikube"
+name: "CI/CD Pipeline"
 on: [pull_request, push]
 
 jobs:
@@ -6,7 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
-    - uses: opsgang/ga-setup-minikube@v0.1.1
+    - uses: opsgang/ga-setup-minikube@v0.1.2
       with:
         minikube-version: 1.21.0
         k8s-version: 1.20.7
