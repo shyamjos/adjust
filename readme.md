@@ -1,8 +1,8 @@
-#Readme
+# Readme
 
 This repository contains instructions for deploying a simple ruby web app to a kubernetes cluster with high availability and load balancing.
 
-#Ruby - Web APP (sawasy/http_server)
+# Ruby - Web APP (sawasy/http_server)
 
 The sample ruby web app provided for the task was not giving proper http response message (was missing status-line and header section in the response) and because of this kubeentes's readinessProbe was failing with below error message. 
 ```
@@ -43,7 +43,7 @@ loop {
 ```
 After making this change kubernetes probes were successful 
 
-##Dockerfile Explained
+## Dockerfile Explained
 
 ```
 #Use Ruby 3 Alpine image as base
@@ -69,7 +69,7 @@ CMD ["ruby", "http_server.rb"]
 * Added `USER nobody` line to the dockerfile to run the container as a non-root user
 * Added `.dockeringore` file to repository to exclude files and directories
 
-##Setup Minikube
+## Setup Minikube
 
 Follow [this guide](https://minikube.sigs.k8s.io/docs/start/) for installing minikube.
 Once installed, we need to configure following add-ons
@@ -82,7 +82,7 @@ minikube addons enable ingress
 minikube addons enable metrics-server
 ```
 
-##Achieving high availability in kubernetes
+## Achieving high availability in kubernetes
 
 * Deployment Strategy: To avoid interruptions during deployments we are using a rolling update strategy with maxSurge: 5 and unavailable: 0
 * podAntiAffinity: For better availability we are using podAntiAffinity to spread the pod among different nodes
@@ -91,7 +91,7 @@ minikube addons enable metrics-server
 * HorizontalPodAutoscaler: Here we are using the HorizontalPodAutoscaler object to scale the application based CPU/Memory utilization
 * PodDisruptionBudget: We are using PodDisruptionBudget to protect our application from voluntary evictions
 
-##Deployment 
+## Deployment 
 
 To deploy the application run below command 
 ```
@@ -102,7 +102,7 @@ To check if last deployment was successful run below command
 kubectl rollout status deployment adjust-ruby-app
 ```
 
-##Setup Github Actions / CD Pipeline
+## Setup Github Actions / CD Pipeline
 We are using following github action workflow to build and deploy application to a minikube cluster on every commit/PR.
 
 ```
