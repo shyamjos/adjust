@@ -1,29 +1,36 @@
-name: CI
-on:
-  - pull_request
+name: "Create cluster using Minikube"
+on: [pull_request, push]
+
 jobs:
-  job1:
+  setup-minikube:
     runs-on: ubuntu-latest
-    name: build image
     steps:
-    - uses: actions/checkout@v2
-    - name: Start minikube
-      uses: medyagh/setup-minikube@master
-    - name: Cluster Health Check
-      run: kubectl get pods -A
-    - name: Build image
+    - uses: actions/checkout@master
+    - uses: opsgang/ga-setup-minikube@v0.1.1
+      with:
+        minikube-version: 1.21.0
+        k8s-version: 1.20.7
+    - name: Setup Cluster
       run: |
+        minikube config set vm-driver docker
+        minikube config set kubernetes-version v1.20.7
+        minikube start
+        minikube update-context
+        kubectl cluster-info
+        kubectl get pods -A
+    - name: Build image 
+      run: | 
         export SHELL=/bin/bash
         eval $(minikube -p minikube docker-env)
-        docker build -f ./Dockerfile -t adjust-ruby-app:latest .
+        make build-image
         echo -n "verifying images:"
-        docker images        
+        docker images
     - name: Deploy to minikube
-      run:
-        kubectl apply -f ruby-app-k8s.yaml
+      run: 
+        kubectl apply -f deploy/deploy-minikube.yaml
     - name: Test service URLs
-      run: |
+      run: | 
         minikube service list
-        minikube service adjust-ruby-app --url
-        echo "Checking Service Endpoint Health"
-        curl $(minikube service adjust-ruby-app --url)
+        minikube service discover --url
+        echo -n "Testing Endpoint..."
+        curl $(minikube service discover --url)/version
