@@ -92,6 +92,15 @@ Once installed, we need to configure following add-ons
 minikube addons enable ingress
 minikube addons enable metrics-server
 ```
+Build image 
+```
+docker build . -t adjust-ruby-app:latest
+```
+
+Push image 
+```
+minikube image load adjust-ruby-app:latest
+```
 To deploy the application run below command 
 ```
 kubectl apply -f ruby-app-k8s.yaml
