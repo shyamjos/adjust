@@ -107,8 +107,15 @@ We are using following github action workflow to build and deploy application to
 
 ```
 name: "CI/CD Pipeline"
-on: [pull_request, push]
-
+on:
+  push:
+    branches:
+      - master
+    paths-ignore:
+      - '**.md'
+  pull_request:
+    paths-ignore:
+      - '**.md'
 jobs:
   CICD-minikube:
     runs-on: ubuntu-latest
@@ -138,6 +145,6 @@ jobs:
         kubectl apply -f ruby-app-k8s.yaml && kubectl rollout status deployment adjust-ruby-app
 ```        
 
-##Final Notes 
+## Final Notes 
 * As a next step we can create helm chart for easy customization and maintainbilty
 * Configure network policy to limit access to the web app pods
