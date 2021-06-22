@@ -1,6 +1,13 @@
 name: "CI/CD Pipeline"
-on: [pull_request, push]
-
+on:
+  push:
+    branches:
+      - master
+    paths-ignore:
+      - '**.md'
+  pull_request:
+    paths-ignore:
+      - '**.md'
 jobs:
   CICD-minikube:
     runs-on: ubuntu-latest
