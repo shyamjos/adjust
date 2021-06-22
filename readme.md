@@ -161,4 +161,4 @@ jobs:
 
 ## Final Notes 
 * As a next step we can create helm chart for easy customization and maintainbilty
-* Configure network policy to limit access to the web app pods
+* Configure network policy to limit access to the web app pods (Not working in minikube)
