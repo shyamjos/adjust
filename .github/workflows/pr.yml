@@ -28,12 +28,3 @@ jobs:
     - name: Deploy to minikube
       run: 
         kubectl apply -f ruby-app-k8s.yaml && kubectl rollout status deployment adjust-ruby-app
-    - name: Test service URLs
-      run: | 
-        echo -n "Testing Endpoint..."
-        kubectl expose deployment adjust-ruby-app --type=NodePort --name=adjust-ruby-app-test
-        PORT=$(kubectl get svc adjust-ruby-app-test -o=jsonpath='{.spec.ports[?(@.port==80)].nodePort}')
-        IP=$(minikube ip)
-        minikube service adjust-ruby-app-test --url
-        curl  --retry 3 --retry-delay 10 "$(minikube service adjust-ruby-app-test --url)/healthcheck"
-        curl  --retry 3 --retry-delay 10 "$(minikube service adjust-ruby-app-test --url)/"
