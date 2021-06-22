@@ -121,7 +121,7 @@ kind: PodDisruptionBudget
 metadata:
   name: adjust-ruby-app
 spec:
-  minAvailable: 1
+  minAvailable: 2
   selector:
     matchLabels:
       app: adjust-ruby-app
