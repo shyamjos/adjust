@@ -109,6 +109,7 @@ curl -H "Host: ruby-app.adjust.local" http://$(minikube ip)
 
 ## Setup Github Actions / CD Pipeline
 We are using following github action workflow to build and deploy application to a minikube cluster on every commit/PR.
+See Github Actions tab for [more info](https://github.com/shyamjos/adjust/actions/workflows/pr.yml) 
 
 ```
 name: "CI/CD Pipeline"
