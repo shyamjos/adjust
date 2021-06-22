@@ -30,7 +30,7 @@ jobs:
         kubectl apply -f ruby-app-k8s.yaml && kubectl rollout status deployment adjust-ruby-app
     - name: Test service URLs
       run: | 
-        minikube service list
-        minikube service discover --url
         echo -n "Testing Endpoint..."
-        curl $(minikube service discover --url)/version
+        kubectl	get svc	adjust-ruby-app
+        minikube ip
+        curl -H "Host: ruby-app.adjust.local" http://$(minikube ip)
