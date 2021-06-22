@@ -1,0 +1,29 @@
+name: CI
+on:
+  - pull_request
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    name: build image
+    steps:
+    - uses: actions/checkout@v2
+    - name: Start minikube
+      uses: medyagh/setup-minikube@master
+    - name: Cluster Health Check
+      run: kubectl get pods -A
+    - name: Build image
+      run: |
+        export SHELL=/bin/bash
+        eval $(minikube -p minikube docker-env)
+        docker build -f ./Dockerfile -t adjust-ruby-app:latest .
+        echo -n "verifying images:"
+        docker images        
+    - name: Deploy to minikube
+      run:
+        kubectl apply -f ruby-app-k8s.yaml
+    - name: Test service URLs
+      run: |
+        minikube service list
+        minikube service adjust-ruby-app --url
+        echo "------------------opening the service------------------"
+        curl $(minikube service example --url)
