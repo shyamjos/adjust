@@ -2,7 +2,7 @@
 
 This repository contains instructions for deploying a simple ruby web app to a kubernetes cluster with high availability and load balancing.
 
-# Ruby - Web APP (sawasy/http_server)
+## Ruby - Web APP (sawasy/http_server)
 
 The sample ruby web app provided for the task was not giving proper http response message (was missing status-line and header section in the response) and because of this Kubernetes's readinessProbe was failing with below error message. 
 ```
