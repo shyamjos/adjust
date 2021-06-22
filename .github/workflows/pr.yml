@@ -28,7 +28,7 @@ jobs:
     - name: Deploy to minikube
       run: 
         kubectl apply -f ruby-app-k8s.yaml
-        kubectl rollout status deployment/adjust-ruby-app || echo "Deployment failed!" && exit 1
+        kubectl rollout status deployment adjust-ruby-app
     - name: Test service URLs
       run: | 
         minikube service list
