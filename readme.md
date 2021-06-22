@@ -101,6 +101,11 @@ To check if last deployment was successful run below command
 ```
 kubectl rollout status deployment adjust-ruby-app
 ```
+To access the service run below command
+
+```
+curl -H "Host: ruby-app.adjust.local" http://$(minikube ip)
+```
 
 ## Setup Github Actions / CD Pipeline
 We are using following github action workflow to build and deploy application to a minikube cluster on every commit/PR.
