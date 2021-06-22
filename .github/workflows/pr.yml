@@ -35,4 +35,6 @@ jobs:
         PORT=$(kubectl get svc adjust-ruby-app-test -o=jsonpath='{.spec.ports[?(@.port==80)].nodePort}')
         IP=$(minikube ip)
         minikube service adjust-ruby-app-test --url
-        curl $(minikube service adjust-ruby-app-test --url)
+        curl --fail "$(minikube service adjust-ruby-app-test --url)/healthcheck"
+        curl --fail "$(minikube service adjust-ruby-app-test --url)/"
+
