@@ -4,7 +4,7 @@ This repository contains instructions for deploying a simple ruby web app to a k
 
 # Ruby - Web APP (sawasy/http_server)
 
-The sample ruby web app provided for the task was not giving proper http response message (was missing status-line and header section in the response) and because of this kubeentes's readinessProbe was failing with below error message. 
+The sample ruby web app provided for the task was not giving proper http response message (was missing status-line and header section in the response) and because of this Kubernetes's readinessProbe was failing with below error message. 
 ```
 Events:
   Type     Reason     Age               From               Message
@@ -86,8 +86,8 @@ minikube addons enable metrics-server
 
 * Deployment Strategy: To avoid interruptions during deployments we are using a rolling update strategy with maxSurge: 5 and unavailable: 0
 * podAntiAffinity: For better availability we are using podAntiAffinity to spread the pod among different nodes
-* Limits: Proper limits and requests are configured after doing some load testing.(For high traffic APIs CPU limits may cause [latency issues] (https://github.com/kubernetes/kubernetes/issues/51135) )
-* readinessProbe: Since we are using readinessProbe containers wont receive live traffic until readinessProbe is successful (In most cases [you only need readinessProbe](https://srcco.de/posts/kubernetes-liveness-probes-are-dangerous.html))
+* Limits: Proper limits and requests are configured after doing some load testing.For high traffic APIs CPU limits may cause [latency issues] (https://github.com/kubernetes/kubernetes/issues/51135)
+* readinessProbe: Since we are using readinessProbe containers wont receive live traffic until readinessProbe is successful, In most cases [you only need readinessProbe](https://srcco.de/posts/kubernetes-liveness-probes-are-dangerous.html)
 * HorizontalPodAutoscaler: Here we are using the HorizontalPodAutoscaler object to scale the application based CPU/Memory utilization
 * PodDisruptionBudget: We are using PodDisruptionBudget to protect our application from voluntary evictions
 
