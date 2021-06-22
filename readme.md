@@ -69,19 +69,6 @@ CMD ["ruby", "http_server.rb"]
 * Added `USER nobody` line to the dockerfile to run the container as a non-root user
 * Added `.dockeringore` file to repository to exclude files and directories
 
-## Setup Minikube
-
-Follow [this guide](https://minikube.sigs.k8s.io/docs/start/) for installing minikube.
-Once installed, we need to configure following add-ons
-
-* ingress - In-order to create a ingress object we need an ingress controller
-* metrics-server - To configure HPA we need a metrics provider 
-
-```
-minikube addons enable ingress
-minikube addons enable metrics-server
-```
-
 ## Achieving high availability in kubernetes
 
 * Deployment Strategy: To avoid interruptions during deployments we are using a rolling update strategy with maxSurge: 5 and unavailable: 0
@@ -93,6 +80,18 @@ minikube addons enable metrics-server
 
 ## Deployment 
 
+### Setup Minikube
+
+Follow [this guide](https://minikube.sigs.k8s.io/docs/start/) for installing minikube.
+Once installed, we need to configure following add-ons
+
+* ingress - In-order to create a ingress object we need an ingress controller
+* metrics-server - To configure HPA we need a metrics provider 
+
+```
+minikube addons enable ingress
+minikube addons enable metrics-server
+```
 To deploy the application run below command 
 ```
 kubectl apply -f ruby-app-k8s.yaml
