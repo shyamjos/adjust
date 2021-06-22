@@ -16,6 +16,8 @@ jobs:
         minikube config set kubernetes-version v1.20.7
         minikube start
         minikube update-context
+        minikube addons enable ingress
+        minikube addons enable metrics-server
         kubectl cluster-info
         kubectl get pods -A
     - name: Build image 
